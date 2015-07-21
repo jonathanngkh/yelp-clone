@@ -4,7 +4,7 @@
     %h3 Reviews for
     %h3=restaurant.name
 
-    - if restaurant
+    - if restaurant.reviews.any?
       %ul
         - restaurant.reviews.each do |review|
           %li
