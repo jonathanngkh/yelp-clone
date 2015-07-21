@@ -14,5 +14,7 @@ feature 'reviewing' do
     expect(page).to have_content 'meh'
   end
 
-  scenario ''
+  scenario 'reviews get destroyed along with restaurants' do
+
+  end
 end
