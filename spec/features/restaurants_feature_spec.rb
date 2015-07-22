@@ -23,6 +23,12 @@ feature 'restaurants' do
 
   context 'adding restaurants' do
     scenario 'shows form then restaurant' do
+      User.create(email: 'test@example.com', password: 'password')
+      visit 'users/sign_in'
+      fill_in 'Email', with: 'test@example.com'
+      fill_in 'Password', with: 'password'
+      click_button 'Log in'
+
       visit '/restaurants'
       click_link 'Add a restaurant'
       fill_in 'Name', with: 'KFC'
@@ -31,15 +37,26 @@ feature 'restaurants' do
       expect(current_path).to eq '/restaurants'
     end
 
-    context 'invalid restaurant' do
-      scenario 'does not let you submit a name that is too short' do
-        visit '/restaurants'
-        click_link 'Add a restaurant'
-        fill_in 'Name', with: 'kf'
-        click_button 'Create Restaurant'
-        expect(page).not_to have_css 'h2', text: 'kf'
-        expect(page).to have_content 'error'
-      end
+    scenario 'does not let you submit a name that is too short' do
+      User.create(email: 'test@example.com', password: 'password')
+      visit 'users/sign_in'
+      fill_in 'Email', with: 'test@example.com'
+      fill_in 'Password', with: 'password'
+      click_button 'Log in'
+
+      visit '/restaurants'
+      click_link 'Add a restaurant'
+      fill_in 'Name', with: 'kf'
+      click_button 'Create Restaurant'
+      expect(page).not_to have_css 'h2', text: 'kf'
+      expect(page).to have_content 'error'
+    end
+
+    scenario 'does not let you add a restaurant without logging in' do
+      visit '/restaurants'
+      click_link 'Add a restaurant'
+      expect(page).not_to have_css 'h2', text: 'KFC'
+      expect(page).to have_content 'Log in'
     end
   end
 
@@ -58,6 +75,12 @@ feature 'restaurants' do
     before { Restaurant.create(name: 'KFC') }
 
     scenario 'let a user edit a restaurant' do
+      User.create(email: 'test@example.com', password: 'password')
+      visit 'users/sign_in'
+      fill_in 'Email', with: 'test@example.com'
+      fill_in 'Password', with: 'password'
+      click_button 'Log in'
+
       visit '/restaurants'
       click_link 'Edit KFC'
       fill_in 'Name', with: 'Kentucky Fried Chicken'
@@ -71,6 +94,12 @@ feature 'restaurants' do
     before { Restaurant.create name: 'KFC' }
 
     scenario 'removes a restaurant when a user clicks a delete link' do
+      User.create(email: 'test@example.com', password: 'password')
+      visit 'users/sign_in'
+      fill_in 'Email', with: 'test@example.com'
+      fill_in 'Password', with: 'password'
+      click_button 'Log in'
+
       visit '/restaurants'
       click_link 'Delete KFC'
       expect(page).not_to have_content 'KFC'
