@@ -13,8 +13,4 @@ feature 'reviewing' do
     expect(current_path).to eq '/restaurants'
     expect(page).to have_content 'meh'
   end
-
-  scenario 'reviews get destroyed along with restaurants' do
-
-  end
 end

@@ -31,13 +31,13 @@ feature 'restaurants' do
       expect(current_path).to eq '/restaurants'
     end
 
-    scenario 'invalid restaurant' do
-      it 'does not let you subimt a name that is too short' do
+    context 'invalid restaurant' do
+      scenario 'does not let you submit a name that is too short' do
         visit '/restaurants'
         click_link 'Add a restaurant'
         fill_in 'Name', with: 'kf'
         click_button 'Create Restaurant'
-        expect(page).not_to have_css 'h2', text 'kf'
+        expect(page).not_to have_css 'h2', text: 'kf'
         expect(page).to have_content 'error'
       end
     end
@@ -55,7 +55,7 @@ feature 'restaurants' do
   end
 
   context 'editing restaurants' do
-    before {Restaurant.create(name: 'KFC')}
+    before { Restaurant.create(name: 'KFC') }
 
     scenario 'let a user edit a restaurant' do
       visit '/restaurants'
