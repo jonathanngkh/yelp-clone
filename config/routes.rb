@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     resources :reviews
   end
 
-  devise_for :users
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   # Example resource route with options:
   #   resources :products do
   #     member do
